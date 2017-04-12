@@ -1,44 +1,18 @@
-%% Name: Ryan Froehling
-%% Email: ryan.j.froehling@vanderbilt.edu
-%% VUnetID: froehlrj
-%% Class: CS270
-%% Date: 11/27/14
-%% Honor Statement: I plegde that I have neither given nor received any
-%% unauthorized aid on this assignment.
-
-%% Complete description: Solves sudoku by specifying the data range,
-%% listing the constraints, and then attepting to fill it in with label.
+%% Solves sudoku by specifying the data range, listing the constraints, and then attepting to fill it in with label.
 %% Works on 9x9 sudoku.
 
 %% use routines from the Constraint Logic Programming over Finite Domains library
 :- use_module(library('clpfd')).
 
-%% see "library clpfd: Constraint Logic Programming over Finite Domains" in
-%% the provided SWI-clpfd.pdf file.
+%% Execute program with:  "solve('[path\\folder\\etc\\]filename.txt')."
 
-
-%% go is the main entry point. Enter "go." at the Prolog prompt
-%%
-go :-
-	File = 'c:\\cs270\\prolog\\sudoku.txt',
-	start(File).
-
-
-%% Do not change the following function, as our
-%% testing script depends upon it.
-%% You are free to make functions similar to it for your
-%% own testing purposes.
-%%
-start(File) :-
+solve(File) :-
 	see(File),		% open file
 	write(trying_file(File)),nl,nl,
 	read(Board),
 	seen,                   % close file
-	time(sudoku(Board)),    % call your solver here, passing it the Board (with timer)
-	%sudoku(Board),         % call your solver here, passing it the Board (without timer)
+	time(sudoku(Board)),
 	pretty_sudo_print(Board),nl.
-
-
 
 pretty_sudo_print(Board) :-
 	Board = [R1,R2,R3,R4,R5,R6,R7,R8,R9],
@@ -68,21 +42,6 @@ printsudorow(Row) :-
 	write(C8), write(' '),
 	write(C9), write(' '), nl.
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%% Main driver: sudoku(Board)
-%%
-%% Your job is to write this and any other needed predicates:
-%%
-%% This predicate should contain your rules for solving Sudoku.
-%% If the puzzle can be solved, the unknowns in Board should be
-%% replaced with the answer. If the puzzle cannot be solved,
-%% "No" or "False" should be produced by the Prolog interpreter.
-%%
-
 sudoku(Board) :-
 	Board = [R1,R2,R3,R4,R5,R6,R7,R8,R9],
 	R1 ins 1..9,
@@ -106,22 +65,3 @@ subgrids([A,B,C,D,E,F,G,H,I],[J,K,L,M,N,O,P,Q,R],[S,T,U,V,W,X,Y,Z,AA]) :-
 	all_different([A,B,C,J,K,L,S,T,U]),
 	all_different([D,E,F,M,N,O,V,W,X]),
 	all_different([G,H,I,P,Q,R,Y,Z,AA]).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
